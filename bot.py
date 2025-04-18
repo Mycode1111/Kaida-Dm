@@ -42,7 +42,8 @@ async def dm(interaction: discord.Interaction, user: discord.User, message: str)
     except Exception as e:
         await interaction.response.send_message(f"❌ ส่งไม่ได้: {e}", ephemeral=True)
 
+from keep_alive import keep_alive
+keep_alive()
 
-        
 # รันบอทด้วย Token ที่ดึงจาก Environment Variable
 bot.run(token)
