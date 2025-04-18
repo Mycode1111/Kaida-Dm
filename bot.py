@@ -42,7 +42,7 @@ async def dm(interaction: discord.Interaction, user: discord.User, message: str)
         await interaction.response.send_message(f"❌ ส่งไม่ได้: {e}", ephemeral=True)
 
 custom_messages = [
-    "Kaida verify ready!💚",
+    "Kaida Dm ready!💚",
     "Made by wasd.",
 ]
 
