@@ -3,7 +3,6 @@ from discord.ext import commands, tasks
 from discord import app_commands
 import os
 import time
-from dotenv import load_dotenv
 
 # ดึงโทเคนจาก Environment Variable
 token = os.getenv("DISCORD_TOKEN")
