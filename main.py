@@ -4,7 +4,8 @@ from discord import app_commands
 import os
 import time
 
-from myserver import server_on
+from keep_alive import keep_alive
+keep_alive()
 
 # ดึงโทเคนจาก Environment Variable
 token = os.getenv("DISCORD_TOKEN")
@@ -66,8 +67,6 @@ async def on_ready():
     await bot.tree.sync()
     print(f'Logged in as {bot.user}')
 
-
-server_on
 
 # รันบอทด้วย Token ที่ดึงจาก Environment Variable
 bot.run(token)
