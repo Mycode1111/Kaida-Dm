@@ -1,10 +1,10 @@
+from keep_alive import keep_alive
 import discord
 from discord.ext import commands, tasks
 from discord import app_commands
 import os
 import time
 
-from keep_alive import keep_alive
 keep_alive()
 
 # ดึงโทเคนจาก Environment Variable
