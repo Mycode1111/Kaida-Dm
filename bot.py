@@ -1,9 +1,9 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from discord import app_commands
 import os
-
-
+import time
+from dotenv import load_dotenv
 
 # ดึงโทเคนจาก Environment Variable
 token = os.getenv("DISCORD_TOKEN")
@@ -42,6 +42,31 @@ async def dm(interaction: discord.Interaction, user: discord.User, message: str)
     except Exception as e:
         await interaction.response.send_message(f"❌ ส่งไม่ได้: {e}", ephemeral=True)
 
+custom_messages = [
+    "Kaida verify ready!💚",
+    "Made by wasd.",
+]
+
+@tasks.loop(seconds=5)  # เปลี่ยนข้อความทุก 10 วินาที
+async def rotate_custom_activity():
+    current_message = custom_messages[rotate_custom_activity.current_index]
+    await bot.change_presence(
+        activity=discord.CustomActivity(name=current_message),
+        status=discord.Status.online
+    )
+    rotate_custom_activity.current_index = (rotate_custom_activity.current_index + 1) % len(custom_messages)
+
+rotate_custom_activity.current_index = 0
+
+@bot.event
+async def on_ready():
+    # รีเฟรชคำสั่งใหม่ให้กับ Discord API
+    rotate_custom_activity.start()  # เริ่มหมุนข้อความ
+    await bot.tree.sync()
+    print(f'Logged in as {bot.user}')
+
+
+        
 from keep_alive import keep_alive
 keep_alive()
 
