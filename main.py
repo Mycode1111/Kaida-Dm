@@ -45,30 +45,7 @@ async def dm(interaction: discord.Interaction, user: discord.User, message: str)
     except Exception as e:
         await interaction.response.send_message(f"❌ ส่งไม่ได้: {e}", ephemeral=True)
 
-# กำหนดข้อความสถานะที่บอทจะหมุน
-custom_messages = [
-    "Kaida Dm ready!💚",
-    "Made by wasd.",
-]
 
-@tasks.loop(seconds=5)  # เปลี่ยนข้อความทุก 5 วินาที
-async def rotate_custom_activity():
-    current_message = custom_messages[rotate_custom_activity.current_index]
-    await bot.change_presence(
-        activity=discord.CustomActivity(name=current_message),
-        status=discord.Status.online
-    )
-    rotate_custom_activity.current_index = (rotate_custom_activity.current_index + 1) % len(custom_messages)
-
-rotate_custom_activity.current_index = 0
-
-# ให้แน่ใจว่าใช้ on_ready() เพียงครั้งเดียว
-@bot.event
-async def on_ready():
-    # เริ่มหมุนข้อความสถานะ
-    rotate_custom_activity.start()  
-    await bot.tree.sync()  # รีเฟรชคำสั่ง
-    print(f'Logged in as {bot.user}')
 
 # รันบอทด้วย Token ที่ดึงจาก Environment Variable
 bot.run(token)
