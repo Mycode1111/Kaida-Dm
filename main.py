@@ -3,7 +3,6 @@ import discord
 from discord.ext import commands, tasks
 from discord import app_commands
 import os
-import time
 
 keep_alive()
 
@@ -17,9 +16,9 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    # ตั้งค่ากิจกรรมให้เป็นการสตรีมมิ่ง
-    activity = discord.Streaming(name="Kaida", url="https://www.youtube.com/watch?v=bH3vMDK_Hn0")
-    await bot.change_presence(status=discord.Status.idle, activity=activity)
+    # ตั้งกิจกรรมเป็น "Streaming" (แสดง YouTube หรือกิจกรรมอื่นๆ)
+    activity = discord.Streaming(name="Kaida Dm💚", url="https://www.youtube.com/watch?v=bH3vMDK_Hn0")
+    await bot.change_presence(status=discord.Status.online, activity=activity)  # เปลี่ยนสถานะเป็น Online
     
     print(f"✅ Logged in as {bot.user}")
     
