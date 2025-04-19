@@ -17,11 +17,11 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     # ตั้งกิจกรรมเป็น "Streaming" (แสดง YouTube หรือกิจกรรมอื่นๆ)
-    activity = discord.Streaming(name="Kaida Dm💚", url="https://www.youtube.com/watch?v=bH3vMDK_Hn0")
+    activity = discord.Streaming(name="Kaida Dm ready!💚", url="https://www.youtube.com/watch?v=bH3vMDK_Hn0")
     await bot.change_presence(status=discord.Status.online, activity=activity)  # เปลี่ยนสถานะเป็น Online
-    
+
     print(f"✅ Logged in as {bot.user}")
-    
+
     try:
         # ซิงค์คำสั่ง Slash ในระดับ Global
         synced = await bot.tree.sync()  # ซิงค์คำสั่งแบบ global
