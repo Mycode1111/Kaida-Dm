@@ -10,12 +10,25 @@ keep_alive()
 # ดึงโทเคนจาก Environment Variable
 token = os.getenv("DISCORD_TOKEN")
 
-
 intents = discord.Intents.default()
 intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+@bot.event
+async def on_ready():
+    # กำหนดสถานะของบอทเป็น Idle และตั้งกิจกรรม (Activity)
+    activity = discord.Streaming(name="Kaida", url="https://www.youtube.com/watch?v=bH3vMDK_Hn0")
+    await bot.change_presence(status=discord.Status.idle, activity=activity)
+    
+    print(f"✅ Logged in as {bot.user}")
+    
+    try:
+        # ซิงค์คำสั่ง Slash ในระดับ Global
+        synced = await bot.tree.sync()  # ซิงค์คำสั่งแบบ global
+        print(f"🔁 Synced {len(synced)} command(s).")
+    except Exception as e:
+        print(f"❌ Sync error: {e}")
 
 # สร้างคำสั่ง Slash สำหรับส่งข้อความ DM
 @bot.tree.command(name="dm", description="ส่งข้อความ DM หาใครสักคน")
@@ -33,12 +46,13 @@ async def dm(interaction: discord.Interaction, user: discord.User, message: str)
     except Exception as e:
         await interaction.response.send_message(f"❌ ส่งไม่ได้: {e}", ephemeral=True)
 
+# กำหนดข้อความสถานะที่บอทจะหมุน
 custom_messages = [
     "Kaida Dm ready!💚",
     "Made by wasd.",
 ]
 
-@tasks.loop(seconds=5)  # เปลี่ยนข้อความทุก 10 วินาที
+@tasks.loop(seconds=5)  # เปลี่ยนข้อความทุก 5 วินาที
 async def rotate_custom_activity():
     current_message = custom_messages[rotate_custom_activity.current_index]
     await bot.change_presence(
@@ -51,11 +65,10 @@ rotate_custom_activity.current_index = 0
 
 @bot.event
 async def on_ready():
-    # รีเฟรชคำสั่งใหม่ให้กับ Discord API
-    rotate_custom_activity.start()  # เริ่มหมุนข้อความ
-    await bot.tree.sync()
+    # เริ่มหมุนข้อความสถานะ
+    rotate_custom_activity.start()  
+    await bot.tree.sync()  # รีเฟรชคำสั่ง
     print(f'Logged in as {bot.user}')
-
 
 # รันบอทด้วย Token ที่ดึงจาก Environment Variable
 bot.run(token)
