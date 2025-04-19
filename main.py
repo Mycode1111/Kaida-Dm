@@ -16,17 +16,6 @@ intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-@bot.event
-async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="Kaida Dm💚"))
-
-    print(f"✅ Logged in as {bot.user}")
-    try:
-        # ซิงค์คำสั่ง Slash ในระดับ Global
-        synced = await bot.tree.sync()  # ซิงค์คำสั่งแบบ global
-        print(f"🔁 Synced {len(synced)} command(s).")
-    except Exception as e:
-        print(f"❌ Sync error: {e}")
 
 # สร้างคำสั่ง Slash สำหรับส่งข้อความ DM
 @bot.tree.command(name="dm", description="ส่งข้อความ DM หาใครสักคน")
