@@ -17,7 +17,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    # กำหนดสถานะของบอทเป็น Idle และตั้งกิจกรรม (Activity)
+    # ตั้งค่ากิจกรรมให้เป็นการสตรีมมิ่ง
     activity = discord.Streaming(name="Kaida", url="https://www.youtube.com/watch?v=bH3vMDK_Hn0")
     await bot.change_presence(status=discord.Status.idle, activity=activity)
     
@@ -63,6 +63,7 @@ async def rotate_custom_activity():
 
 rotate_custom_activity.current_index = 0
 
+# ให้แน่ใจว่าใช้ on_ready() เพียงครั้งเดียว
 @bot.event
 async def on_ready():
     # เริ่มหมุนข้อความสถานะ
